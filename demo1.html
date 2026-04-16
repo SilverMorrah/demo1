@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SharePoint Record System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-50 font-sans text-slate-900">
+
+    <nav class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="showView('dashboard')">
+            <div class="bg-indigo-600 p-2 rounded-lg text-white">
+                <i class="fas fa-database"></i>
+            </div>
+            <h1 class="text-xl font-bold tracking-tight">DataStream <span class="text-indigo-600">Pro</span></h1>
+        </div>
+        <button onclick="showView('form')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-medium transition-all flex items-center gap-2">
+            <i class="fas fa-plus"></i> New Record
+        </button>
+    </nav>
+
+    <main id="dashboard-view" class="max-w-6xl mx-auto p-8">
+        <header class="mb-10">
+            <h2 class="text-3xl font-bold">SharePoint Records</h2>
+            <p class="text-slate-500 mt-2">Real-time customer transaction feed.</p>
+        </header>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <p class="text-slate-500 text-sm mb-1">Total Records</p>
+                <h3 id="total-count" class="text-2xl font-bold">1</h3>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <p class="text-slate-500 text-sm mb-1">Total Amount</p>
+                <h3 id="total-amount" class="text-2xl font-bold text-indigo-600">20 GHS</h3>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <p class="text-slate-500 text-sm mb-1">Last Sync</p>
+                <h3 id="last-sync" class="text-2xl font-bold text-slate-700">Just now</h3>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs uppercase tracking-wider">
+                    <tr>
+                        <th class="px-6 py-4">ID</th>
+                        <th class="px-6 py-4">Customer Name</th>
+                        <th class="px-6 py-4">Email</th>
+                        <th class="px-6 py-4">Phone</th>
+                        <th class="px-6 py-4">Amount</th>
+                        <th class="px-6 py-4">Status</th>
+                    </tr>
+                </thead>
+                    <tbody id="record-body" class="divide-y divide-slate-100">
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4 font-mono text-sm text-slate-400">#46</td>
+                        <td class="px-6 py-4 font-semibold">Asample Personpaying</td>
+                        <td class="px-6 py-4 text-slate-600">asam@ple.com</td>
+                        <td class="px-6 py-4 text-slate-600 text-sm">+2331111111111</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded font-bold text-sm">20 GHS</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded-md">Processed</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <main id="form-view" class="hidden max-w-2xl mx-auto p-8">
+        <button onclick="showView('dashboard')" class="text-slate-500 hover:text-indigo-600 mb-6 flex items-center gap-2 transition-colors">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </button>
+
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
+            <h2 class="text-2xl font-bold mb-6">Create New Record</h2>
+            
+            <form id="customerForm" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">First Name</label>
+                        <input type="text" name="first_name" required class="w-full p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
+                        <input type="text" name="last_name" required class="w-full p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                    <input type="email" name="email" required class="w-full p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+                    <input type="tel" name="phone" placeholder="+233..." required class="w-full p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Amount</label>
+                    <div class="relative">
+                        <input type="text" name="amount" placeholder="0.00" required class="w-full p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                        <span class="absolute right-4 top-3 text-slate-400 font-bold">GHS</span>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
+                    Save to SharePoint
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // --- VIEW NAVIGATION ---
+        function showView(viewName) {
+            const dashboard = document.getElementById('dashboard-view');
+            const form = document.getElementById('form-view');
+
+            if (viewName === 'dashboard') {
+                dashboard.classList.remove('hidden');
+                form.classList.add('hidden');
+            } else {
+                dashboard.classList.add('hidden');
+                form.classList.remove('hidden');
+            }
+        }
+
+        // --- FORM SUBMISSION (POST Webhook) ---
+        document.getElementById('customerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const formData = new FormData(e.target);
+            
+            // Map form data to your specific JSON payload structure
+            const payload = {
+                customer: {
+                    id: Math.floor(Math.random() * 1000), // Mock ID generation
+                    first_name: formData.get('first_name'),
+                    last_name: formData.get('last_name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    amount: `${formData.get('amount')} ghs`
+                }
+            };
+
+            btn.disabled = true;
+            btn.innerText = "Sending...";
+
+            try {
+                // PLACEHOLDER: Replace with your actual Webhook URL (Power Automate, etc.)
+                const WEBHOOK_URL = 'https://YOUR_WEBHOOK_ENDPOINT_HERE.com';
+                
+                /* const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                */
+
+                // Simulating Success
+                console.log("Payload Sent:", payload);
+                setTimeout(() => {
+                    alert("Success! Record sent to SharePoint.");
+                    e.target.reset();
+                    btn.disabled = false;
+                    btn.innerText = "Save to SharePoint";
+                    showView('dashboard');
+                    
+                    // Manually add to dashboard to see it immediately
+                    addRecordToTable(payload);
+                }, 1000);
+
+            } catch (error) {
+                alert("Error sending data.");
+                btn.disabled = false;
+                btn.innerText = "Save to SharePoint";
+            }
+        });
+
+        // --- HELPER: ADD DATA TO TABLE ---
+        function addRecordToTable(data) {
+            const tableBody = document.getElementById('record-body');
+            const { customer } = data;
+            const newRow = `
+                <tr class="hover:bg-slate-50 transition-all border-l-4 border-indigo-500">
+                    <td class="px-6 py-4 font-semibold">${customer.first_name} ${customer.last_name}</td>
+                    <td class="px-6 py-4 text-slate-600">${customer.email}</td>
+                    <td class="px-6 py-4 text-slate-600 text-sm">${customer.phone}</td>
+                    <td class="px-6 py-4"><span class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded font-bold text-sm">${customer.amount}</span></td>
+                    <td class="px-6 py-4"><span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-md">New</span></td>
+                </tr>
+            `;
+            tableBody.insertAdjacentHTML('afterbegin', newRow);
+        }
+    </script>
+</body>
+</html>
